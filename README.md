@@ -126,6 +126,14 @@ You can adjust the following parameters in the code:
 
 This project is open source and available under the MIT License.
 
+## Contributing
+
+Feel free to contribute by:
+- Reporting bugs
+- Suggesting new features
+- Improving documentation
+- Submitting pull requests
+
 ## Support
 
 If you encounter any issues or have questions, please check the troubleshooting section or open an issue in the repository.
