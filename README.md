@@ -1,139 +1,143 @@
-# Eye-Controlled Navigation System
+# 👁️ Enhanced Eye-Controlled Navigation System
 
-A computer vision-based system that allows users to control their computer cursor and perform clicks using eye movements and blinks. This project uses facial landmark detection to track eye position and translate it into mouse movements.
+A powerful hands-free interface that allows users to **control the mouse cursor**, **perform clicks**, **drag-and-drop**, and **trigger gestures** using **eye movements and blinks**, built with OpenCV, MediaPipe, and PyAutoGUI.
 
-## Features
+---
 
-- **Real-time Eye Tracking**: Uses your webcam to track eye movements in real-time
-- **Cursor Control**: Move your computer cursor by looking at different parts of the screen
-- **Blink-to-Click**: Perform mouse clicks by blinking your left eye
-- **Visual Feedback**: See tracked eye landmarks on the video feed
+## 🚀 Features
 
-## Requirements
+### ✅ Core Features
+- **Cursor Movement**: Track iris position in real-time to control mouse cursor.
+- **Left Click via Blink**: Blink your left eye to perform a left click.
+- **Right Click via Blink**: Blink your right eye to perform a right click.
 
-### Hardware
-- Webcam (built-in or external)
-- Computer with sufficient processing power for real-time video processing
+### 🔁 Advanced Interactions
+- **Drag and Drop**: Close both eyes to hold the click and release to drop.
+- **Gesture-Based Commands**: Perform quick eye movement gestures (e.g., look LEFT → RIGHT → LEFT) to open new browser tabs or trigger hotkeys.
+- **Calibration Mode**: Calibrate by looking at dots shown in different screen corners before using the system.
 
-### Software Dependencies
+### 🤖 ML-Based Blink Detection
+- Uses **Eye Aspect Ratio (EAR)** instead of fixed distances for robust and adaptive blink detection.
+
+---
+
+## 🛠️ Requirements
+
+### 🔧 Software
 ```bash
 pip install opencv-python
 pip install mediapipe
 pip install pyautogui
-```
+````
 
-## Installation
+### 💻 Hardware
 
-1. Clone or download this repository
-2. Install the required dependencies:
+* A functioning webcam
+* Laptop/Desktop capable of real-time video processing
+
+---
+
+## 📦 Installation & Setup
+
+1. **Clone or download the repository.**
+2. **Install dependencies:**
+
    ```bash
    pip install opencv-python mediapipe pyautogui
    ```
-3. Run the application:
+3. **Run the script:**
+
    ```bash
    python main.py
    ```
 
-## How It Works
+---
 
-### Eye Movement Detection
-- Uses MediaPipe's Face Mesh to detect 468 facial landmarks
-- Tracks specific landmarks around the iris (landmarks 474-478)
-- Maps eye position to screen coordinates proportionally
+## ⚙️ How It Works
 
-### Blink Detection
-- Monitors the vertical distance between upper and lower eyelid landmarks (145 and 159)
-- Triggers a click when the distance falls below a threshold (0.005)
-- Includes a 1-second delay after each click to prevent multiple triggers
+### 📌 Calibration
 
-### Coordinate Mapping
-The system maps your eye position within the camera frame to your screen coordinates:
-```
-screen_x = (screen_width / frame_width) * eye_x
-screen_y = (screen_height / frame_height) * eye_y
-```
+Before usage, a calibration screen shows 5 dots one-by-one to help align your eye position with screen corners.
 
-## Usage
+### 🧠 Cursor Control
 
-1. **Start the Application**: Run `python main.py`
-2. **Position Yourself**: Sit comfortably in front of your webcam with good lighting
-3. **Calibrate**: Look around the screen to get familiar with the sensitivity
-4. **Navigate**: Move your eyes to control the cursor
-5. **Click**: Blink your left eye to perform clicks
-6. **Exit**: Press 'q' to quit the application
+* Uses MediaPipe Face Mesh (landmark 475) to track iris movement.
+* Cursor is moved smoothly using `pyautogui.moveTo()` based on gaze.
 
-## Visual Indicators
+### 👀 Blink Detection
 
-- **Green circles**: Show tracked iris landmarks
-- **Yellow circles**: Show left eye landmarks used for blink detection
-- **Video feed**: Displays the processed camera input with landmarks
+* EAR is computed from multiple eye landmarks.
+* If EAR falls below threshold for a few frames → Blink is detected.
+* Different eyes trigger different clicks.
 
-## Configuration
+### 🧠 Gesture Recognition
 
-You can adjust the following parameters in the code:
+* Eye gesture pattern "LEFT → RIGHT → LEFT" (based on gaze direction) triggers a hotkey: `Ctrl + T` (opens new browser tab).
+* Future gestures can be added easily.
 
-- **Blink sensitivity**: Change the threshold value `0.005` in the blink detection condition
-- **Click delay**: Modify `pyautogui.sleep(1)` to change the delay between clicks
-- **Landmark visualization**: Adjust circle size and colors for better visibility
+### 🖱️ Drag and Drop
 
-## Troubleshooting
+* Close both eyes simultaneously to hold a click (`mouseDown`).
+* Open both eyes to release (`mouseUp`).
 
-### Common Issues
+---
 
-1. **No face detected**: 
-   - Ensure good lighting
-   - Position your face clearly in the camera frame
-   - Check if your webcam is working properly
+## 📺 Usage Instructions
 
-2. **Cursor too sensitive/not sensitive enough**:
-   - Adjust your distance from the camera
-   - Modify the coordinate mapping ratios
+1. Sit comfortably in front of your webcam.
+2. Follow the on-screen calibration dots.
+3. Move your eyes around to control the cursor.
+4. Blink to click, or gesture to trigger actions.
+5. Press `q` to quit anytime.
 
-3. **Accidental clicks**:
-   - Increase the blink threshold value
-   - Increase the click delay duration
+---
 
-4. **Camera not found**:
-   - Check if another application is using the webcam
-   - Try changing the camera index in `cv.VideoCapture(0)` to `cv.VideoCapture(1)` or higher
+## ⚠️ Troubleshooting
 
-## Technical Details
+| Issue               | Solution                                   |
+| ------------------- | ------------------------------------------ |
+| Cursor doesn’t move | Ensure proper lighting and face visibility |
+| Clicks too frequent | Increase `CLICK_DELAY` or EAR threshold    |
+| Drag not releasing  | Try opening eyes wider                     |
+| Webcam not detected | Change the index in `cv.VideoCapture(0)`   |
 
-### Libraries Used
-- **OpenCV**: Video capture and image processing
-- **MediaPipe**: Face mesh detection and landmark tracking
-- **PyAutoGUI**: Mouse control and automation
+---
 
-### Landmark Points
-- **Iris tracking**: Landmarks 474-478 (right eye iris)
-- **Blink detection**: Landmarks 145 and 159 (left eye upper and lower eyelid)
+## 📚 Technical Stack
 
-## Safety Considerations
+* **OpenCV**: For video capture and image processing
+* **MediaPipe**: Face mesh for landmark detection (iris + eye tracking)
+* **PyAutoGUI**: Mouse automation and hotkey control
+* **Tkinter (Optional)**: For future GUI configuration
 
-- **Eye strain**: Take regular breaks when using the system
-- **Lighting**: Ensure adequate lighting to reduce eye strain
-- **Calibration**: Spend time getting familiar with the system before extended use
+---
 
-## Future Enhancements
+## 🧠 Future Improvements
 
-- Calibration system for improved accuracy
-- Support for both eye tracking
-- Gesture recognition for additional controls
-- Settings interface for easy configuration
-- Multiple click types (right-click, double-click)
+* GUI configuration for setting EAR thresholds & delays
+* Voice command integration
+* Cross-platform packaging with installer
+* Logging and analytics dashboard for eye activity
+* Real-time calibration curve fitting
 
-## License
+---
 
-This project is open source and available under the MIT License.
+## 📄 License
 
-## Contributing
+This project is licensed under the MIT License.
 
-Feel free to contribute by:
-- Reporting bugs
-- Suggesting new features
-- Improving documentation
-- Submitting pull requests
+---
 
-## Support
+## 🙌 Acknowledgements
 
-If you encounter any issues or have questions, please check the troubleshooting section or open an issue in the repository.
+* [MediaPipe by Google](https://github.com/google/mediapipe)
+* [PyAutoGUI Documentation](https://pyautogui.readthedocs.io/)
+* [OpenCV Python](https://docs.opencv.org/)
+
+---
+
+## 🤝 Contributing
+
+Pull requests and feature suggestions are welcome! Please open an issue or submit a PR if you want to contribute.
+
+---
