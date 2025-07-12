@@ -1,4 +1,4 @@
-# 👁️ Enhanced Eye-Controlled Navigation System
+# 👁️ Eye-Controlled Navigation System
 
 A powerful hands-free interface that allows users to **control the mouse cursor**, **perform clicks**, **drag-and-drop**, and **trigger gestures** using **eye movements and blinks**, built with OpenCV, MediaPipe, and PyAutoGUI.
 
