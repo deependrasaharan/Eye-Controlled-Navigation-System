@@ -122,6 +122,12 @@ Before usage, a calibration screen shows 5 dots one-by-one to help align your ey
 
 ---
 
+## 👥 Contributors
+* Deependra Singh — [@deependrasaharan](https://github.com/deependrasaharan)
+* Samar Pratap Singh — [@samar-pratap-singh230](https://github.com/samar-pratap-singh230)
+
+---
+
 ## 📄 License
 
 This project is licensed under the MIT License.
